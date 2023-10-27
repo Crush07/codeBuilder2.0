@@ -45,7 +45,7 @@ public class Main {
         //实体代码块
         //实体名
         entity.setEntityBlock(new Entity.EntityBlock());
-        entity.getEntityBlock().setEntityName("Car");
+        entity.setEntityName("Car");
 
         String[] attributeArray = {
                 "id",
@@ -64,7 +64,7 @@ public class Main {
         EntityCreator entityCreator = new EntityCreator();
         Block block = entityCreator.createBlock(entity);
         System.out.println(block);
-        System.out.println(JSONObject.parse(JSONObject.toJSONString(block)));
+//        System.out.println(JSONObject.parse(JSONObject.toJSONString(block)));
 
     }
 }

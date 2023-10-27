@@ -23,7 +23,8 @@ public class EntityCreator extends BlockCreator<Entity>{
         for (Import anImport : importList) {
             Block block = new Block();
             block.setSingleLine(new Line());
-            block.getSingleLine().setText("import " + anImport.getImportJavaName() + ";");
+            block.getSingleLine().setText("import " + anImport.getImportJavaName());
+            block.getSingleLine().setHasSemicolon(true);
             block.getSingleLine().setRetractionSize(0);
             res.getChildList().add(block);
         }
@@ -35,6 +36,7 @@ public class EntityCreator extends BlockCreator<Entity>{
             Block block = new Block();
             block.setSingleLine(new Line());
             block.getSingleLine().setText("@" + annotation.getAnnotationName());
+            block.getSingleLine().setHasSemicolon(false);
             block.getSingleLine().setRetractionSize(0);
             res.getChildList().add(block);
         }
@@ -45,6 +47,7 @@ public class EntityCreator extends BlockCreator<Entity>{
         Block entityCodeBlock = new Block();
         entityCodeBlock.setSingleLine(new Line());
         entityCodeBlock.getSingleLine().setText("public class " + entity.getEntityName());
+        entityCodeBlock.getSingleLine().setHasSemicolon(false);
         entityCodeBlock.getSingleLine().setRetractionSize(0);
 
         List<Entity.Attribute> childList = entityBlock.getChildList();
@@ -57,9 +60,13 @@ public class EntityCreator extends BlockCreator<Entity>{
             block.getSingleLine().setText(attribute.getAttributeRoleName()
                     + " " + attribute.getAttributeTypeName()
                     + " " + attribute.getAttributeName());
+            block.getSingleLine().setHasSemicolon(true);
             block.getSingleLine().setRetractionSize(0);
 
+            attributeBlockList.add(block);
         }
+
+        res.getChildList().add(entityCodeBlock);
 
         return res;
     }

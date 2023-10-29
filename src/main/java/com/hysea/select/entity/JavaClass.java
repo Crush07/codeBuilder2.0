@@ -13,4 +13,6 @@ public class JavaClass {
 
     String entityName;
 
+    String classTypeName;
+
 }

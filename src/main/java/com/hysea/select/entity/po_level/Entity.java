@@ -19,6 +19,10 @@ public class Entity extends JavaClass {
 
         private String entityName;
 
+        private JavaClass extendsClass;
+
+        private List<JavaClass> implementsClassList;
+
     }
 
     @Data

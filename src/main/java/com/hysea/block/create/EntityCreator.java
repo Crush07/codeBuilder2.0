@@ -64,6 +64,10 @@ public class EntityCreator extends BlockCreator<Entity>{
             block.getSingleLine().setRetractionSize(0);
 
             attributeBlockList.add(block);
+
+            block = new Block();
+            block.setSingleLine(Line.getEmptyLine());
+            attributeBlockList.add(block);
         }
 
         res.getChildList().add(entityCodeBlock);

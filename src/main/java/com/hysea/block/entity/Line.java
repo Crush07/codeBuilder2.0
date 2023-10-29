@@ -20,7 +20,9 @@ public class Line extends Block{
     boolean hasSemicolon;
 
     public static Line getEmptyLine(){
-        return new Line("",false);
+        Line line = new Line("", false);
+        line.setRetractionSize(0);
+        return line;
     }
 
     @Override

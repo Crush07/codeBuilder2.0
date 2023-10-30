@@ -11,14 +11,15 @@ import lombok.EqualsAndHashCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Entity extends JavaClass {
 
-    private JavaClass extendsClass;
+    private Entity extendsClass;
 
-    private List<JavaClass> implementsClassList;
+    private List<Entity> implementsClassList;
 
     private EntityBlock entityBlock;
 
@@ -53,6 +54,11 @@ public class Entity extends JavaClass {
     public static class Attribute extends Define {
 
         private String AttributeRoleName;
+
+        @Override
+        public void beExtend() {
+
+        }
 
         @Override
         public String toString() {
@@ -90,10 +96,40 @@ public class Entity extends JavaClass {
          */
         private List<Define> parameterList;
 
+        /**
+         * 是否重写
+         */
+        private boolean needOverride;
+
+        /**
+         * 是否有方法体
+         */
+        private boolean hasMethodBody;
+
+        @Override
+        public void beExtend() {
+            this.needOverride = true;
+        }
+
         @Override
         public String toString() {
 
             StringBuilder res = new StringBuilder();
+
+            if(needOverride){
+                Annotation annotation = new Annotation();
+                annotation.setAnnotationName("Override");
+                getAnnotationList().add(annotation);
+                hasMethodBody = true;
+            }
+
+
+
+            //打印函数的注解
+            List<Annotation> annotationList = getAnnotationList();
+            for (Annotation annotation : annotationList) {
+                res.append(annotation);
+            }
 
             if (getMethodRoleName() != null) {
                 res.append(getMethodRoleName()).append(" ");
@@ -107,19 +143,34 @@ public class Entity extends JavaClass {
 
             res.append(")");
 
-            res.append(";").append("\n");
+
+            if(hasMethodBody){
+                res.append("{")
+                        .append("\n")
+                        .append("}")
+                        .append("\n");
+            }else{
+                res.append(";").append("\n");
+            }
 
             return res.toString();
         }
     }
 
     @Data
-    public static class Define {
+    public abstract static class Define {
 
         private String javaClassName;
 
         private String defineName;
 
+        private List<Annotation> annotationList;
+
+        abstract public void beExtend();
+
+        public Define() {
+            this.annotationList = new ArrayList<>();
+        }
     }
 
     @Override
@@ -143,14 +194,19 @@ public class Entity extends JavaClass {
                 .append(" ")
                 .append(getJavaClassName());
 
-        List<JavaClass> implementsClassList = getImplementsClassList();
+        List<Entity> implementsClassList = getImplementsClassList();
         if (implementsClassList.size() > 0) {
             res.append(" ").append("implements").append(" ");
         }
 
         StringJoiner implementsString = new StringJoiner(",");
-        for (JavaClass implementElement : implementsClassList) {
-            implementsString.add(implementElement.getJavaClassName());
+        for (Entity implementEntity : implementsClassList) {
+            implementsString.add(implementEntity.getJavaClassName());
+
+            List<Define> childList = implementEntity.getEntityBlock().getChildList();
+            childList = childList.stream().peek(Define::beExtend).collect(Collectors.toList());
+
+            getEntityBlock().getChildList().addAll(childList);
         }
 
         res.append(implementsString);

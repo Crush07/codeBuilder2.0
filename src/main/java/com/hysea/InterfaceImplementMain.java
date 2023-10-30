@@ -48,19 +48,19 @@ public class InterfaceImplementMain {
         entity.setJavaClassName("CarImpl");
         entity.setClassTypeName("class");
 
-        String[] methodArray = {
-                "id",
-                "order",
-                "name"
-        };
-
-        for (String s : methodArray) {
-            Entity.Method attribute = new Entity.Method();
-            attribute.setDefineName(s);
-            attribute.setJavaClassName("Integer");
-            attribute.setMethodRoleName("private");
-            entity.getEntityBlock().getChildList().add(attribute);
-        }
+//        String[] methodArray = {
+//                "id",
+//                "order",
+//                "name"
+//        };
+//
+//        for (String s : methodArray) {
+//            Entity.Method attribute = new Entity.Method();
+//            attribute.setDefineName(s);
+//            attribute.setJavaClassName("Integer");
+//            attribute.setMethodRoleName("private");
+//            entity.getEntityBlock().getChildList().add(attribute);
+//        }
 
         System.out.println(entity);
 //        System.out.println(JSONObject.parse(JSONObject.toJSONString(block)));

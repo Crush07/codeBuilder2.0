@@ -54,11 +54,13 @@ public class InterfaceMain {
         };
 
         for (String s : methodArray) {
-            Entity.Method attribute = new Entity.Method();
-            attribute.setDefineName(s);
-            attribute.setJavaClassName("Integer");
-            attribute.setMethodRoleName("private");
-            entity.getEntityBlock().getChildList().add(attribute);
+            Entity.Method method = new Entity.Method();
+            method.setDefineName(s);
+            method.setJavaClassName("Integer");
+            method.setMethodRoleName("private");
+            method.setNeedOverride(false);
+            method.setHasMethodBody(false);
+            entity.getEntityBlock().getChildList().add(method);
         }
 
         return entity;

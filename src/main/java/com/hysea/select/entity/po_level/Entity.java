@@ -8,7 +8,9 @@ import com.hysea.select.entity.JavaClass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,9 +20,17 @@ public class Entity extends JavaClass {
 
     private List<JavaClass> implementsClassList;
 
+    private EntityBlock entityBlock;
+
+    public Entity() {
+
+        this.implementsClassList = new ArrayList<>();
+
+    }
+
     @EqualsAndHashCode(callSuper = true)
     @Data
-    public static class EntityBlock extends Block<Define>{
+    public static class EntityBlock extends Block<Define> {
 
         @Override
         public String toString() {
@@ -40,7 +50,7 @@ public class Entity extends JavaClass {
 
     @EqualsAndHashCode(callSuper = true)
     @Data
-    public static class Attribute extends Define{
+    public static class Attribute extends Define {
 
         private String AttributeRoleName;
 
@@ -49,7 +59,7 @@ public class Entity extends JavaClass {
 
             StringBuilder res = new StringBuilder();
 
-            if(getAttributeRoleName() != null){
+            if (getAttributeRoleName() != null) {
                 res.append(getAttributeRoleName()).append(" ");
             }
 
@@ -66,7 +76,7 @@ public class Entity extends JavaClass {
 
     @EqualsAndHashCode(callSuper = true)
     @Data
-    public static class Method extends Define{
+    public static class Method extends Define {
 
         private String roleName;
 
@@ -85,7 +95,7 @@ public class Entity extends JavaClass {
 
             StringBuilder res = new StringBuilder();
 
-            if(getMethodRoleName() != null){
+            if (getMethodRoleName() != null) {
                 res.append(getMethodRoleName()).append(" ");
             }
 
@@ -112,8 +122,6 @@ public class Entity extends JavaClass {
 
     }
 
-    private EntityBlock entityBlock;
-
     @Override
     public String toString() {
 
@@ -125,11 +133,27 @@ public class Entity extends JavaClass {
         }
 
         List<Annotation> annotationList = getAnnotationList();
-        for(Annotation annotation : annotationList){
+        for (Annotation annotation : annotationList) {
             res.append(annotation);
         }
 
-        res.append("public").append(" ").append(getClassTypeName()).append(" ").append(getJavaClassName());
+        res.append("public")
+                .append(" ")
+                .append(getClassTypeName())
+                .append(" ")
+                .append(getJavaClassName());
+
+        List<JavaClass> implementsClassList = getImplementsClassList();
+        if (implementsClassList.size() > 0) {
+            res.append(" ").append("implements").append(" ");
+        }
+
+        StringJoiner implementsString = new StringJoiner(",");
+        for (JavaClass implementElement : implementsClassList) {
+            implementsString.add(implementElement.getJavaClassName());
+        }
+
+        res.append(implementsString);
 
         res.append(getEntityBlock());
 

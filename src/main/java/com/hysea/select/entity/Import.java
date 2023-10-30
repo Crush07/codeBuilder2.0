@@ -7,4 +7,8 @@ public class Import {
 
     private String importJavaName;
 
+    @Override
+    public String toString() {
+        return "import " + importJavaName + ";\n";
+    }
 }

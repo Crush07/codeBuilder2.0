@@ -2,6 +2,7 @@ package com.hysea.select.entity;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,8 +12,14 @@ public class JavaClass {
 
     List<Annotation> annotationList;
 
-    String entityName;
+    String javaClassName;
 
     String classTypeName;
 
+    public JavaClass() {
+
+        this.importList = new ArrayList<>();
+        this.annotationList = new ArrayList<>();
+
+    }
 }

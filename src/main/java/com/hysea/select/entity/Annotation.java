@@ -7,4 +7,8 @@ public class Annotation {
 
     private String annotationName;
 
+    @Override
+    public String toString() {
+        return "@" + getAnnotationName() + "\n";
+    }
 }

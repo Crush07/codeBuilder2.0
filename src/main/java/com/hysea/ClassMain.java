@@ -1,18 +1,15 @@
 package com.hysea;
 
-import com.alibaba.fastjson.JSONObject;
-import com.hysea.block.create.EntityCreator;
 import com.hysea.block.entity.Block;
 import com.hysea.select.entity.Annotation;
 import com.hysea.select.entity.Import;
 import com.hysea.select.entity.po_level.Entity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Main {
+public class ClassMain {
     public static void main(String[] args) {
 
         Entity entity = new Entity();
@@ -45,25 +42,24 @@ public class Main {
         //实体代码块
         //实体名
         entity.setEntityBlock(new Entity.EntityBlock());
-        entity.setEntityName("Car");
+        entity.setJavaClassName("Car");
+        entity.setClassTypeName("class");
 
         String[] attributeArray = {
                 "id",
                 "order",
                 "name"
         };
-        List<Entity.Attribute> attributeList = Arrays.stream(attributeArray).map(s -> {
-            Entity.Attribute attribute = new Entity.Attribute();
-            attribute.setAttributeName(s);
-            attribute.setAttributeTypeName("Integer");
-            attribute.setAttributeRoleName("private");
-            return attribute;
-        }).collect(Collectors.toList());
-        entity.getEntityBlock().setChildList(attributeList);
 
-        EntityCreator entityCreator = new EntityCreator();
-        Block block = entityCreator.createBlock(entity);
-        System.out.println(block);
+        for (String s : attributeArray) {
+            Entity.Attribute attribute = new Entity.Attribute();
+            attribute.setDefineName(s);
+            attribute.setJavaClassName("Integer");
+            attribute.setAttributeRoleName("private");
+            entity.getEntityBlock().getChildList().add(attribute);
+        }
+
+        System.out.println(entity);
 //        System.out.println(JSONObject.parse(JSONObject.toJSONString(block)));
 
     }

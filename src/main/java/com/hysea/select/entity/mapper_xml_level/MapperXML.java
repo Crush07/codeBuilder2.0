@@ -19,6 +19,7 @@ public class MapperXML extends XMLFormat {
     public static class SelectCountXML extends MapperXML {
 
 
+
     }
 
     @Override

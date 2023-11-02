@@ -13,8 +13,9 @@ public class SQLTable {
 
     private List<Attribute> attributeList;
 
+    @EqualsAndHashCode(callSuper = true)
     @Data
-    public static class Attribute {
+    public static class Attribute extends SQLTable{
 
         /**
          * 属性名

@@ -1,9 +1,11 @@
 package com.hysea.select.entity.sql;
 
+import com.hysea.select.entity.XMLFormat;
 import com.hysea.util.Matchers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -30,6 +32,66 @@ public class WhereSQL extends SQLBase {
         @Override
         public String toString() {
             return "#{"+getEntityAttribute()+"}";
+        }
+
+    }
+
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    public static class ForInWhereTag extends WhereItem{
+
+        private XMLFormat xmlFormat;
+
+        @Override
+        public String toString() {
+            XMLFormat xmlFormat = getXmlFormat();
+            xmlFormat.setTagName("forEach");
+            xmlFormat.setSingle(false);
+
+            String javaClassName = getEntityAttribute().getJavaClassName();
+
+            List<XMLFormat.Attribute> attributeList = new ArrayList<>();
+
+            XMLFormat.Attribute attribute = new XMLFormat.Attribute();
+            attribute.setAttributeName("collection");
+            attribute.setAttributeValue(javaClassName+"List");
+            attributeList.add(attribute);
+
+            attribute = new XMLFormat.Attribute();
+            attribute.setAttributeName("item");
+            attribute.setAttributeValue(javaClassName);
+            attributeList.add(attribute);
+
+            attribute = new XMLFormat.Attribute();
+            attribute.setAttributeName("open");
+            attribute.setAttributeValue("(");
+            attributeList.add(attribute);
+
+            attribute = new XMLFormat.Attribute();
+            attribute.setAttributeName("close");
+            attribute.setAttributeValue(")");
+            attributeList.add(attribute);
+
+            attribute = new XMLFormat.Attribute();
+            attribute.setAttributeName("separator");
+            attribute.setAttributeValue(",");
+            attributeList.add(attribute);
+
+            xmlFormat.setAttributeList(attributeList);
+            return xmlFormat.toString();
+        }
+
+    }
+
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    public static class SqlItem extends WhereItem{
+
+        private SelectSQL selectSQL;
+
+        @Override
+        public String toString() {
+            return "("+selectSQL.toString()+")";
         }
 
     }
@@ -73,6 +135,36 @@ public class WhereSQL extends SQLBase {
         @Override
         public String functionPartName(){
             return "Like"+getVar2().getEntityAttribute().getJavaClassName();
+        }
+
+    }
+
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    public static class InCondition extends Condition{
+        @Override
+        public String toString() {
+            return getVar1() + " in " + getVar2();
+        }
+
+        @Override
+        public String functionPartName(){
+            return "In"+getVar1().getEntityAttribute().getJavaClassName();
+        }
+
+    }
+
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    public static class NotInCondition extends Condition{
+        @Override
+        public String toString() {
+            return getVar1() + " not in " + getVar2();
+        }
+
+        @Override
+        public String functionPartName(){
+            return "NotIn"+getVar1().getEntityAttribute().getJavaClassName();
         }
 
     }

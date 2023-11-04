@@ -12,16 +12,20 @@ public class SelectSQL {
 
     private JoinSQL joinSQL;
 
+    private WhereSQL whereSQL;
+
     @Override
     public String toString() {
         return getSelectColumnSQL().toString()
                 + getFromSQL().toString()
-                + getJoinSQL().toString();
+                + getJoinSQL().toString()
+                + getWhereSQL().toString();
     }
 
     public String functionName(){
         return getSelectColumnSQL().functionPartName()
                 + getFromSQL().functionPartName()
-                + getJoinSQL().functionPartName();
+                + getJoinSQL().functionPartName()
+                + getWhereSQL().functionPartName();
     }
 }

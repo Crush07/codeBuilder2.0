@@ -18,7 +18,6 @@ public class FromSQL extends SQLBase {
 
         // from
         return "from " +
-                "\n" +
 
                 // sys_dept sd
                 getSqlTable().getTableName() +

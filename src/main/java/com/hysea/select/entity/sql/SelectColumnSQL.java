@@ -88,7 +88,7 @@ public class SelectColumnSQL extends SQLBase {
 
             StringJoiner selectItemStringJoiner = new StringJoiner(",");
             for (SelectItem selectItem : selectItemList) {
-                selectItemStringJoiner.add(getTableAlias() + "." + selectItem.toString());
+                selectItemStringJoiner.add(getTableAlias() + "." + selectItem.getAttributeName());
             }
 
             return selectItemStringJoiner.toString();
@@ -115,25 +115,25 @@ public class SelectColumnSQL extends SQLBase {
         }
         res.append("\n");
 
-        // from
-        res.append(" from ")
-                .append("\n");
-
-        // sys_dept sd
-        res.append(selectSQLLineList.get(0).getSqlTable().getTableName())
-                .append(" ")
-                .append(selectSQLLineList.get(0).getTableAlias())
-                .append("\n");
-
-        // left join sys_user su on su.user_id = sd.user_id
-        for (int i = 1; i < selectSQLLineList.size(); i++) {
-            res.append("left join ")
-                    .append(selectSQLLineList.get(i).getSqlTable().getTableName())
-                    .append(" ")
-                    .append(selectSQLLineList.get(i).getTableAlias())
-                    .append(" on ");
+//        // from
+//        res.append("from ")
+//                .append("\n");
+//
+//        // sys_dept sd
+//        res.append(selectSQLLineList.get(0).getSqlTable().getTableName())
+//                .append(" ")
+//                .append(selectSQLLineList.get(0).getTableAlias())
+//                .append("\n");
+//
+//        // left join sys_user su on su.user_id = sd.user_id
+//        for (int i = 1; i < selectSQLLineList.size(); i++) {
+//            res.append("left join ")
+//                    .append(selectSQLLineList.get(i).getSqlTable().getTableName())
+//                    .append(" ")
+//                    .append(selectSQLLineList.get(i).getTableAlias())
+//                    .append(" on ");
 //                    .append()
-        }
+//        }
 
         return res.toString();
     }

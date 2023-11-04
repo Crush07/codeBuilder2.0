@@ -3,6 +3,8 @@ package com.hysea.select.entity.sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Optional;
+
 @Data
 public class SelectSQL {
 
@@ -16,16 +18,40 @@ public class SelectSQL {
 
     @Override
     public String toString() {
-        return getSelectColumnSQL().toString()
-                + getFromSQL().toString()
-                + getJoinSQL().toString()
-                + getWhereSQL().toString();
+
+        String res = "";
+
+        if(getSelectColumnSQL() != null){
+            res += getSelectColumnSQL().toString();
+        }
+        if(getFromSQL() != null){
+            res += getFromSQL().toString();
+        }
+        if(getJoinSQL() != null){
+            res += getJoinSQL().toString();
+        }
+        if(getWhereSQL() != null){
+            res += getWhereSQL().toString();
+        }
+        return res;
     }
 
     public String functionName(){
-        return getSelectColumnSQL().functionPartName()
-                + getFromSQL().functionPartName()
-                + getJoinSQL().functionPartName()
-                + getWhereSQL().functionPartName();
+
+        String res = "";
+
+        if(getSelectColumnSQL() != null){
+            res += getSelectColumnSQL().functionPartName();
+        }
+        if(getFromSQL() != null){
+            res += getFromSQL().functionPartName();
+        }
+        if(getJoinSQL() != null){
+            res += getJoinSQL().functionPartName();
+        }
+        if(getWhereSQL() != null){
+            res += getWhereSQL().functionPartName();
+        }
+        return res;
     }
 }

@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InterfaceImplementMain {
+public class ServiceImplMain {
     public static void main(String[] args) {
 
-        Entity instance = InterfaceMain.getInstance();
+        Entity instance = ServiceMain.getInstance();
 
         Entity entity = new Entity();
 

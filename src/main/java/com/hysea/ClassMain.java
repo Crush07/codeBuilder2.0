@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClassMain {
-    public static void main(String[] args) {
+
+    public static Entity getInstance(){
+
 
         Entity entity = new Entity();
 
@@ -58,8 +60,10 @@ public class ClassMain {
             attribute.setAttributeRoleName("private");
             entity.getEntityBlock().getChildList().add(attribute);
         }
-
-        System.out.println(entity);
+        return entity;
+    }
+    public static void main(String[] args) {
+        System.out.println(getInstance());
 //        System.out.println(JSONObject.parse(JSONObject.toJSONString(block)));
 
     }

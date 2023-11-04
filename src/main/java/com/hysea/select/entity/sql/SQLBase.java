@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class SQLBase {
 
-
+    public String functionPartName(){
+        return "";
+    }
 
 }
